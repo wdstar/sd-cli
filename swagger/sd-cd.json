@@ -1,0 +1,7558 @@
+{
+  "swagger": "2.0",
+  "host": "api.screwdriver.cd",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "info": {
+    "title": "Screwdriver API Documentation",
+    "version": "3"
+  },
+  "securityDefinitions": {
+    "token": {
+      "type": "bearer",
+      "name": "X-Token",
+      "in": "header"
+    }
+  },
+  "tags": [],
+  "paths": {
+    "/v4/banners": {
+      "get": {
+        "summary": "Get banners",
+        "operationId": "getV4Banners",
+        "description": "Returns all banner records",
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/List Banners",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new banner",
+        "operationId": "postV4Banners",
+        "description": "Create a specific banner",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Create Banner"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/buildclusters": {
+      "get": {
+        "summary": "Get build clusters",
+        "operationId": "getV4Buildclusters",
+        "description": "Returns all build clusters",
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/List of build clusters",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a build cluster",
+        "operationId": "postV4Buildclusters",
+        "description": "Create a specific build cluster",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Create Build"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/collections": {
+      "get": {
+        "summary": "Get collections for requesting user",
+        "operationId": "getV4Collections",
+        "description": "Returns all collection records belonging to the requesting user",
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/List collections for requesting user",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new collection",
+        "operationId": "postV4Collections",
+        "description": "Creates a collection",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Create collection"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/commands": {
+      "get": {
+        "summary": "Get commands with pagination",
+        "operationId": "getV4Commands",
+        "description": "Returns all command records",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Page to paginate",
+            "minimum": 1,
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Count to paginate",
+            "minimum": 1,
+            "maximum": 50,
+            "name": "count",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Keyword to search by",
+            "maxLength": 200,
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Sorting option",
+            "default": "descending",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "x-convert": {
+              "lowercase": true
+            },
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Field to sort by",
+            "maxLength": 100,
+            "name": "sortBy",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Namespace of the Command",
+            "maxLength": 64,
+            "pattern": "/^[\\w-]+$/",
+            "name": "namespace",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "id",
+              "namespace",
+              "version",
+              "description",
+              "maintainer",
+              "format",
+              "habitat",
+              "docker",
+              "binary",
+              "name",
+              "pipelineId",
+              "createTime",
+              "usage",
+              "trusted"
+            ],
+            "name": "distinct",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "false",
+              "true"
+            ],
+            "name": "compact",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/List of commands",
+              "type": "array",
+              "x-alternatives": [
+                {
+                  "$ref": "#/x-alt-definitions/List of commands",
+                  "type": "array"
+                },
+                {
+                  "$ref": "#/x-alt-definitions/Model 2",
+                  "type": "array"
+                }
+              ]
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new command",
+        "operationId": "postV4Commands",
+        "description": "Create a specific command",
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/isAdmin": {
+      "get": {
+        "summary": "Check if a user is admin of a pipeline, event, or job",
+        "operationId": "getV4Isadmin",
+        "description": "Returns true or false",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this pipeline",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "pipelineId",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Identifier of this event",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "eventId",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Identifier of this Job",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "jobId",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/pipelines": {
+      "get": {
+        "summary": "Get pipelines with pagination",
+        "operationId": "getV4Pipelines",
+        "description": "Returns all pipeline records",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Page to paginate",
+            "minimum": 1,
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Count to paginate",
+            "minimum": 1,
+            "maximum": 50,
+            "name": "count",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Keyword to search by",
+            "maxLength": 200,
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Sorting option",
+            "default": "descending",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "x-convert": {
+              "lowercase": true
+            },
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Field to sort by",
+            "maxLength": 100,
+            "name": "sortBy",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Identifier of this pipeline",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "configPipelineId",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/List of Pipelines",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new pipeline",
+        "operationId": "postV4Pipelines",
+        "description": "Create a specific pipeline",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Create Pipeline"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/stats": {
+      "get": {
+        "summary": "API stats",
+        "operationId": "getV4Stats",
+        "description": "Should return statistics for the entire system",
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Stats Object"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/status": {
+      "get": {
+        "summary": "API status",
+        "operationId": "getV4Status",
+        "description": "Should respond with 200: ok",
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "OK"
+              ]
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/templates": {
+      "get": {
+        "summary": "Get templates with pagination",
+        "operationId": "getV4Templates",
+        "description": "Returns all template records",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Page to paginate",
+            "minimum": 1,
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Count to paginate",
+            "minimum": 1,
+            "maximum": 50,
+            "name": "count",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Keyword to search by",
+            "maxLength": 200,
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Sorting option",
+            "default": "descending",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "x-convert": {
+              "lowercase": true
+            },
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Field to sort by",
+            "maxLength": 100,
+            "name": "sortBy",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Namespace of the Template",
+            "maxLength": 64,
+            "pattern": "/^[\\w-]+$/",
+            "name": "namespace",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "id",
+              "labels",
+              "config",
+              "name",
+              "version",
+              "description",
+              "maintainer",
+              "pipelineId",
+              "namespace",
+              "images",
+              "createTime",
+              "trusted"
+            ],
+            "name": "distinct",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "false",
+              "true"
+            ],
+            "name": "compact",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/List of templates",
+              "type": "array",
+              "x-alternatives": [
+                {
+                  "$ref": "#/x-alt-definitions/List of templates",
+                  "type": "array"
+                },
+                {
+                  "$ref": "#/x-alt-definitions/Model 5",
+                  "type": "array"
+                }
+              ]
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new template",
+        "operationId": "postV4Templates",
+        "description": "Create a specific template",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Certify input to template validator"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/tokens": {
+      "get": {
+        "summary": "Get tokens with pagination",
+        "operationId": "getV4Tokens",
+        "description": "Returns all token records belonging to the current user",
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Model 9",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new token",
+        "operationId": "postV4Tokens",
+        "description": "Create a specific token",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Create token"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/versions": {
+      "get": {
+        "summary": "API Package Versions",
+        "operationId": "getV4Versions",
+        "description": "Returns list of Screwdriver package versions and third-party dependencies",
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Versions Object"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/auth/contexts": {
+      "get": {
+        "summary": "Get all auth contexts",
+        "operationId": "getV4AuthContexts",
+        "description": "Get all auth contexts",
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Array of Contexts",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/auth/crumb": {
+      "get": {
+        "summary": "Generate crumb",
+        "operationId": "getV4AuthCrumb",
+        "description": "Should return a crumb",
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Crumb to prevent CSRF Object"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/auth/key": {
+      "get": {
+        "summary": "Get jwt public key",
+        "operationId": "getV4AuthKey",
+        "description": "Public Key for verifying JSON Web Tokens",
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Public Key for Verifying JWTs Object"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/banners/{id}": {
+      "get": {
+        "summary": "Get a single banner",
+        "operationId": "getV4BannersId",
+        "description": "Return a banner record",
+        "parameters": [
+          {
+            "type": "integer",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Model 1"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a banner",
+        "operationId": "putV4BannersId",
+        "description": "Update a banner",
+        "parameters": [
+          {
+            "type": "integer",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Update Banner"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a banner",
+        "operationId": "deleteV4BannersId",
+        "description": "Delete a specific banner and return null if success",
+        "parameters": [
+          {
+            "type": "integer",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/buildclusters/{name}": {
+      "get": {
+        "summary": "Get a single build cluster",
+        "operationId": "getV4BuildclustersName",
+        "description": "Returns a build cluster record",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Name of the build cluster",
+            "maxLength": 50,
+            "pattern": "/^[\\w-]+$/",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Get BuildCluster"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a build cluster",
+        "operationId": "putV4BuildclustersName",
+        "description": "Update a build cluster",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Name of the build cluster",
+            "maxLength": 50,
+            "pattern": "/^[\\w-]+$/",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Update BuildCluster"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a single build cluster",
+        "operationId": "deleteV4BuildclustersName",
+        "description": "Returns null if successful",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Name of the build cluster",
+            "maxLength": 50,
+            "pattern": "/^[\\w-]+$/",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/builds/{id}": {
+      "get": {
+        "summary": "Get a single build",
+        "operationId": "getV4BuildsId",
+        "description": "Returns a build record",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this build",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Get Build"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a build",
+        "operationId": "putV4BuildsId",
+        "description": "Update a specific build",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this Job",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Update Build"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/collections/{id}": {
+      "get": {
+        "summary": "Get a single collection",
+        "operationId": "getV4CollectionsId",
+        "description": "Returns a collection record",
+        "parameters": [
+          {
+            "type": "integer",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Get collection"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a collection",
+        "operationId": "putV4CollectionsId",
+        "description": "Update a specific collection",
+        "parameters": [
+          {
+            "type": "integer",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Update collection"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a single collection",
+        "operationId": "deleteV4CollectionsId",
+        "description": "Returns null if successful",
+        "parameters": [
+          {
+            "type": "integer",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/coverage/info": {
+      "get": {
+        "summary": "Get coverage metadata",
+        "operationId": "getV4CoverageInfo",
+        "description": "Returns object with coverage info",
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/coverage/token": {
+      "get": {
+        "summary": "Get an access token to talk to coverage server",
+        "operationId": "getV4CoverageToken",
+        "description": "Returns a token string",
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/events/{id}": {
+      "get": {
+        "summary": "Get a single event",
+        "operationId": "getV4EventsId",
+        "description": "Returns a event record",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this event",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Get Event"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/jobs/{id}": {
+      "get": {
+        "summary": "Get a single job",
+        "operationId": "getV4JobsId",
+        "description": "Returns a job record",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this Job",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Get Job"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a job",
+        "operationId": "putV4JobsId",
+        "description": "Update a specific job",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this Job",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Update Job"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/pipelines/{id}": {
+      "get": {
+        "summary": "Get a single pipeline",
+        "operationId": "getV4PipelinesId",
+        "description": "Returns a pipeline record",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this pipeline",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Get Pipeline"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a pipeline",
+        "operationId": "putV4PipelinesId",
+        "description": "Update a specific pipeline",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this pipeline",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Update Pipeline"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a single pipeline",
+        "operationId": "deleteV4PipelinesId",
+        "description": "Returns null if successful",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this pipeline",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/secrets/{id}": {
+      "get": {
+        "summary": "Get a single secret",
+        "operationId": "getV4SecretsId",
+        "description": "Returns a secret record",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this secret",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Get Secret"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a secret",
+        "operationId": "putV4SecretsId",
+        "description": "Update a specific secret",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this secret",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Update Secret"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove a single secret",
+        "operationId": "deleteV4SecretsId",
+        "description": "Returns null if successful",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this secret",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/templates/{name}": {
+      "get": {
+        "summary": "Get all template versions for a given template name with pagination",
+        "operationId": "getV4TemplatesName",
+        "description": "Returns all template records for a given template name",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Template name",
+            "maxLength": 64,
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Page to paginate",
+            "minimum": 1,
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Count to paginate",
+            "minimum": 1,
+            "maximum": 50,
+            "name": "count",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Keyword to search by",
+            "maxLength": 200,
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Sorting option",
+            "default": "descending",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "x-convert": {
+              "lowercase": true
+            },
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Field to sort by",
+            "maxLength": 100,
+            "name": "sortBy",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/List of templates",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a template",
+        "operationId": "deleteV4TemplatesName",
+        "description": "Returns null if successful",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Template name",
+            "maxLength": 64,
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/auth/token/{buildId}": {
+      "get": {
+        "summary": "Generate jwt",
+        "operationId": "getV4AuthTokenBuildid",
+        "description": "Generate a JWT for use throughout Screwdriver",
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/JSON Web Token Object"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/builds/{id}/metrics": {
+      "get": {
+        "summary": "Get metrics for this build",
+        "operationId": "getV4BuildsIdMetrics",
+        "description": "Returns list of metrics for the given build",
+        "parameters": [
+          {
+            "type": "string",
+            "x-format": {
+              "isoDate": true
+            },
+            "name": "startTime",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-format": {
+              "isoDate": true
+            },
+            "name": "endTime",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/builds/{id}/secrets": {
+      "get": {
+        "summary": "Get all secrets for a given build",
+        "operationId": "getV4BuildsIdSecrets",
+        "description": "Returns all secrets for a given build",
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/List of secrets",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/commands/{namespace}/{name}": {
+      "get": {
+        "summary": "Get all command versions for a given command namespace/name with pagination",
+        "operationId": "getV4CommandsNamespaceName",
+        "description": "Returns all command records for a given command namespace/name",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Namespace of the Command",
+            "maxLength": 64,
+            "pattern": "/^[\\w-]+$/",
+            "name": "namespace",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Name of the Command",
+            "maxLength": 64,
+            "pattern": "/^[\\w-]+$/",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Page to paginate",
+            "minimum": 1,
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Count to paginate",
+            "minimum": 1,
+            "maximum": 50,
+            "name": "count",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Keyword to search by",
+            "maxLength": 200,
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Sorting option",
+            "default": "descending",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "x-convert": {
+              "lowercase": true
+            },
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Field to sort by",
+            "maxLength": 100,
+            "name": "sortBy",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/List of commands",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a command",
+        "operationId": "deleteV4CommandsNamespaceName",
+        "description": "Returns null if successful",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Namespace of the Command",
+            "maxLength": 64,
+            "pattern": "/^[\\w-]+$/",
+            "name": "namespace",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Name of the Command",
+            "maxLength": 64,
+            "pattern": "/^[\\w-]+$/",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/events/{id}/metrics": {
+      "get": {
+        "summary": "Get metrics for this event",
+        "operationId": "getV4EventsIdMetrics",
+        "description": "Returns list of metrics for the given event",
+        "parameters": [
+          {
+            "type": "string",
+            "x-format": {
+              "isoDate": true
+            },
+            "name": "startTime",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-format": {
+              "isoDate": true
+            },
+            "name": "endTime",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/events/{id}/builds": {
+      "get": {
+        "summary": "Get builds for a given event",
+        "operationId": "getV4EventsIdBuilds",
+        "description": "Returns builds for a given event",
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/lastBuilds",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/jobs/{id}/lastSuccessfulMeta": {
+      "get": {
+        "summary": "Get the last successful metadata for a given job",
+        "operationId": "getV4JobsIdLastsuccessfulmeta",
+        "description": "If no successful builds found in the past 50 builds, will return {}",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this Job",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/admins"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/jobs/{id}/builds": {
+      "get": {
+        "summary": "Get builds for a given job",
+        "operationId": "getV4JobsIdBuilds",
+        "description": "Returns builds for a given job",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Page to paginate",
+            "minimum": 1,
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Count to paginate",
+            "minimum": 1,
+            "maximum": 50,
+            "name": "count",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Keyword to search by",
+            "maxLength": 200,
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Sorting option",
+            "default": "descending",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "x-convert": {
+              "lowercase": true
+            },
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Field to sort by",
+            "maxLength": 100,
+            "name": "sortBy",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/lastBuilds",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/jobs/{id}/metrics": {
+      "get": {
+        "summary": "Get build metrics for this job",
+        "operationId": "getV4JobsIdMetrics",
+        "description": "Returns list of build metrics for the given job",
+        "parameters": [
+          {
+            "type": "string",
+            "x-format": {
+              "isoDate": true
+            },
+            "name": "startTime",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-format": {
+              "isoDate": true
+            },
+            "name": "endTime",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "none",
+              "day",
+              "week",
+              "month",
+              "year"
+            ],
+            "name": "aggregateInterval",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/pipelines/{id}/triggers": {
+      "get": {
+        "summary": "Get all jobs for a given pipeline",
+        "operationId": "getV4PipelinesIdTriggers",
+        "description": "Returns all jobs for a given pipeline",
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/List of triggers",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/pipelines/{id}/metrics": {
+      "get": {
+        "summary": "Get metrics for this pipeline",
+        "operationId": "getV4PipelinesIdMetrics",
+        "description": "Returns list of metrics for the given pipeline",
+        "parameters": [
+          {
+            "type": "string",
+            "x-format": {
+              "isoDate": true
+            },
+            "name": "startTime",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-format": {
+              "isoDate": true
+            },
+            "name": "endTime",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "none",
+              "day",
+              "week",
+              "month",
+              "year"
+            ],
+            "name": "aggregateInterval",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/pipelines/{id}/jobs": {
+      "get": {
+        "summary": "Get all jobs for a given pipeline",
+        "operationId": "getV4PipelinesIdJobs",
+        "description": "Returns all jobs for a given pipeline",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Page to paginate",
+            "minimum": 1,
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Count to paginate",
+            "minimum": 1,
+            "maximum": 50,
+            "name": "count",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Keyword to search by",
+            "maxLength": 200,
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Sorting option",
+            "default": "descending",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "x-convert": {
+              "lowercase": true
+            },
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Field to sort by",
+            "maxLength": 100,
+            "name": "sortBy",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "name": "archived",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Name of the Job",
+            "maxLength": 110,
+            "pattern": "/^(PR-[0-9]+:)?[\\w-]+$/",
+            "name": "jobName",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/List of jobs",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/pipelines/{id}/events": {
+      "get": {
+        "summary": "Get pipeline type events for this pipeline",
+        "operationId": "getV4PipelinesIdEvents",
+        "description": "Returns pipeline events for the given pipeline",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Page to paginate",
+            "minimum": 1,
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Count to paginate",
+            "minimum": 1,
+            "maximum": 50,
+            "name": "count",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Keyword to search by",
+            "maxLength": 200,
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Sorting option",
+            "default": "descending",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "x-convert": {
+              "lowercase": true
+            },
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Field to sort by",
+            "maxLength": 100,
+            "name": "sortBy",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "type",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Pull request number if it is a PR event",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "prNum",
+            "in": "query",
+            "required": false
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/List of events",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/pipelines/{id}/secrets": {
+      "get": {
+        "summary": "Get all secrets secrets for a given pipelines",
+        "operationId": "getV4PipelinesIdSecrets",
+        "description": "Returns all secrets for a given pipeline",
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/List of secrets",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/pipelines/{id}/badge": {
+      "get": {
+        "summary": "Get a badge for the pipeline",
+        "operationId": "getV4PipelinesIdBadge",
+        "description": "Redirects to the badge service",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this pipeline",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/pipelines/{id}/tokens": {
+      "get": {
+        "summary": "List tokens for pipeline",
+        "operationId": "getV4PipelinesIdTokens",
+        "description": "List tokens for a specific pipeline",
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Model 9",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new token for pipeline",
+        "operationId": "postV4PipelinesIdTokens",
+        "description": "Create a specific token for pipeline",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Create token"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove all tokens for a specific pipeline",
+        "operationId": "deleteV4PipelinesIdTokens",
+        "description": "Returns null if successful",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this pipeline",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/templates/{name}/tags": {
+      "get": {
+        "summary": "Get all template tags for a given template name",
+        "operationId": "getV4TemplatesNameTags",
+        "description": "Returns all template tags for a given template name",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Template name",
+            "maxLength": 64,
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Page to paginate",
+            "minimum": 1,
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Count to paginate",
+            "minimum": 1,
+            "maximum": 50,
+            "name": "count",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Keyword to search by",
+            "maxLength": 200,
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Sorting option",
+            "default": "descending",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "x-convert": {
+              "lowercase": true
+            },
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Field to sort by",
+            "maxLength": 100,
+            "name": "sortBy",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Model 16",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/templates/{name}/{versionOrTag}": {
+      "get": {
+        "summary": "Get a single template given template name and version or tag",
+        "operationId": "getV4TemplatesNameVersionortag",
+        "description": "Returns a template record",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Template name",
+            "maxLength": 64,
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Version of the Template",
+            "maxLength": 16,
+            "pattern": "/^(\\d+)(\\.\\d+)?(\\.\\d+)?$/",
+            "x-alternatives": [
+              {
+                "type": "string",
+                "description": "Version of the Template",
+                "example": "1.2",
+                "maxLength": 16,
+                "pattern": "/^(\\d+)(\\.\\d+)?(\\.\\d+)?$/"
+              },
+              {
+                "type": "string",
+                "description": "Name of the Template Tag",
+                "example": "latest",
+                "maxLength": 30,
+                "pattern": "/^[a-zA-Z][\\w-.]+$/"
+              }
+            ],
+            "name": "versionOrTag",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Get Template"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/auth/login/github:github.com/{web}": {
+      "get": {
+        "summary": "Login using oauth",
+        "operationId": "getV4AuthLoginGithubgithubcomWeb",
+        "description": "Authenticate user with oauth provider",
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "post": {
+        "summary": "Login using oauth",
+        "operationId": "postV4AuthLoginGithubgithubcomWeb",
+        "description": "Authenticate user with oauth provider",
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/auth/login/guest/{web}": {
+      "get": {
+        "summary": "Login as an guest user",
+        "operationId": "getV4AuthLoginGuestWeb",
+        "description": "Authenticate an guest user",
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/builds/{id}/steps/{name}": {
+      "get": {
+        "summary": "Get a step for a build",
+        "operationId": "getV4BuildsIdStepsName",
+        "description": "Returns a step record",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this build",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Name of the Step",
+            "maxLength": 64,
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Get Step metadata"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a step for a build",
+        "operationId": "putV4BuildsIdStepsName",
+        "description": "Writes a step record",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this build",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Name of the Step",
+            "maxLength": 64,
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Update Step metadata"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Get Step metadata"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/builds/{id}/artifacts/{name*}": {
+      "get": {
+        "summary": "Get a single build artifact",
+        "operationId": "getV4BuildsIdArtifactsName",
+        "description": "Redirects to store with proper token",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this build",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "name",
+            "in": "path"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "download",
+              "preview"
+            ],
+            "name": "type",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/commands/{namespace}/{name}/{versionOrTag}": {
+      "get": {
+        "summary": "Get a single command given command namespace, name and version or tag",
+        "operationId": "getV4CommandsNamespaceNameVersionortag",
+        "description": "Returns a command record",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Namespace of the Command",
+            "maxLength": 64,
+            "pattern": "/^[\\w-]+$/",
+            "name": "namespace",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Name of the Command",
+            "maxLength": 64,
+            "pattern": "/^[\\w-]+$/",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Version of the Command",
+            "maxLength": 16,
+            "pattern": "/^(\\d+)(\\.\\d+)?(\\.\\d+)?$/",
+            "x-alternatives": [
+              {
+                "type": "string",
+                "description": "Version of the Command",
+                "example": "1.2",
+                "maxLength": 16,
+                "pattern": "/^(\\d+)(\\.\\d+)?(\\.\\d+)?$/"
+              },
+              {
+                "type": "string",
+                "description": "Name of the Command Tag",
+                "example": "latest",
+                "maxLength": 30,
+                "pattern": "/^[a-zA-Z][\\w-.]+$/"
+              }
+            ],
+            "name": "versionOrTag",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Get Command"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/commands/{namespace}/{name}/tags": {
+      "get": {
+        "summary": "Get all command tags for a given command namespace and name",
+        "operationId": "getV4CommandsNamespaceNameTags",
+        "description": "Returns all command tags for a given command namespace and name",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Namespace of the Command",
+            "maxLength": 64,
+            "pattern": "/^[\\w-]+$/",
+            "name": "namespace",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Name of the Command",
+            "maxLength": 64,
+            "pattern": "/^[\\w-]+$/",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Page to paginate",
+            "minimum": 1,
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Count to paginate",
+            "minimum": 1,
+            "maximum": 50,
+            "name": "count",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Keyword to search by",
+            "maxLength": 200,
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Sorting option",
+            "default": "descending",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "x-convert": {
+              "lowercase": true
+            },
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Field to sort by",
+            "maxLength": 100,
+            "name": "sortBy",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/List of command tags",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/pipelines/{id}/{jobName}/badge": {
+      "get": {
+        "summary": "Get a badge for a job",
+        "operationId": "getV4PipelinesIdJobnameBadge",
+        "description": "Redirects to the badge service",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this pipeline",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Name of the Job",
+            "maxLength": 110,
+            "pattern": "/^(PR-[0-9]+:)?[\\w-]+$/",
+            "name": "jobName",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/builds/{id}/steps/{name}/logs": {
+      "get": {
+        "summary": "Get the logs for a build step",
+        "operationId": "getV4BuildsIdStepsNameLogs",
+        "description": "Returns the logs for a step",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this build",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Name of the Step",
+            "maxLength": 64,
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Starting line Number",
+            "default": 0,
+            "minimum": 0,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Max pages sent per request",
+            "default": 10,
+            "minimum": 1,
+            "name": "pages",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Sorting option for lines",
+            "default": "ascending",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "x-convert": {
+              "lowercase": true
+            },
+            "name": "sort",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/List of Log Lines",
+              "type": "array"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/builds": {
+      "post": {
+        "summary": "Create and start a build",
+        "operationId": "postV4Builds",
+        "description": "Create and start a specific build",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Model 17"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/events": {
+      "post": {
+        "summary": "Create and start a event",
+        "operationId": "postV4Events",
+        "description": "Create and start a specific event",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Create Event"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/secrets": {
+      "post": {
+        "summary": "Create a new secret",
+        "operationId": "postV4Secrets",
+        "description": "Create a specific secret",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Create Secret"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/validator": {
+      "post": {
+        "summary": "Validate a given screwdriver.yaml",
+        "operationId": "postV4Validator",
+        "description": "Returns the parsed config or validation errors",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Validation Input"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Execution information"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/webhooks": {
+      "post": {
+        "summary": "Handle webhook events",
+        "operationId": "postV4Webhooks",
+        "description": "Acts on pull request, pushes, comments, etc.",
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/auth/logout": {
+      "post": {
+        "summary": "Logout of screwdriver",
+        "operationId": "postV4AuthLogout",
+        "description": "Clears the cookie used for authentication",
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/validator/command": {
+      "post": {
+        "summary": "Validate a given sd-command.yaml",
+        "operationId": "postV4ValidatorCommand",
+        "description": "returns the parsed config, validation errors, or both",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Certify input to template validator"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Command validation output"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/validator/template": {
+      "post": {
+        "summary": "Validate a given sd-template.yaml",
+        "operationId": "postV4ValidatorTemplate",
+        "description": "returns the parsed config, validation errors, or both",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Certify input to template validator"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Template validation output"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/builds/{id}/token": {
+      "post": {
+        "summary": "Generate a JWT for use throughout a given build",
+        "operationId": "postV4BuildsIdToken",
+        "description": "Generate a JWT for build using temporal JWT which passed in",
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/JSON Web Token Object"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/pipelines/{id}/startall": {
+      "post": {
+        "summary": "Start all child pipelines given a specific pipeline",
+        "operationId": "postV4PipelinesIdStartall",
+        "description": "Start all child pipelines given a specific pipeline",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this pipeline",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/pipelines/{id}/sync": {
+      "post": {
+        "summary": "Sync a pipeline",
+        "operationId": "postV4PipelinesIdSync",
+        "description": "Sync a specific pipeline",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this pipeline",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/pipelines/{id}/sync/webhooks": {
+      "post": {
+        "summary": "Add webhooks or update webhooks if already exists",
+        "operationId": "postV4PipelinesIdSyncWebhooks",
+        "description": "Add or update Screwdriver API webhooks",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this pipeline",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/pipelines/{id}/sync/pullrequests": {
+      "post": {
+        "summary": "Add or update pull request of a pipeline",
+        "operationId": "postV4PipelinesIdSyncPullrequests",
+        "description": "Add or update pull request jobs",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this pipeline",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/tokens/{id}": {
+      "put": {
+        "summary": "Update a token",
+        "operationId": "putV4TokensId",
+        "description": "Update a specific token",
+        "parameters": [
+          {
+            "type": "integer",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Update token metadata"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove a single token",
+        "operationId": "deleteV4TokensId",
+        "description": "Returns null if successful",
+        "parameters": [
+          {
+            "type": "integer",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/events/{id}/stop": {
+      "put": {
+        "summary": "Stop all builds in an event",
+        "operationId": "putV4EventsIdStop",
+        "description": "Stop all builds in a specific event",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this event",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Get Event"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/templates/{name}/trusted": {
+      "put": {
+        "summary": "Update a template's trusted property",
+        "operationId": "putV4TemplatesNameTrusted",
+        "description": "Returns null if successful",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Template name",
+            "maxLength": 64,
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Model 21"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/tokens/{id}/refresh": {
+      "put": {
+        "summary": "Refresh a token",
+        "operationId": "putV4TokensIdRefresh",
+        "description": "Update the value of a token while preserving its other metadata",
+        "parameters": [
+          {
+            "type": "integer",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/commands/{namespace}/{name}/trusted": {
+      "put": {
+        "summary": "Update a command's trusted property",
+        "operationId": "putV4CommandsNamespaceNameTrusted",
+        "description": "Returns null if successful",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Namespace of the Command",
+            "maxLength": 64,
+            "pattern": "/^[\\w-]+$/",
+            "name": "namespace",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Name of the Command",
+            "maxLength": 64,
+            "pattern": "/^[\\w-]+$/",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Model 22"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/pipelines/{pipelineId}/tokens/{tokenId}": {
+      "put": {
+        "summary": "Update a token for pipeline",
+        "operationId": "putV4PipelinesPipelineidTokensTokenid",
+        "description": "Update a specific token for pipeline",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this pipeline",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "pipelineId",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "tokenId",
+            "in": "path",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Update token metadata"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove a single token for a specific pipeline",
+        "operationId": "deleteV4PipelinesPipelineidTokensTokenid",
+        "description": "Returns null if successful",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this pipeline",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "pipelineId",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "tokenId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/templates/{templateName}/tags/{tagName}": {
+      "put": {
+        "summary": "Add or update a template tag",
+        "operationId": "putV4TemplatesTemplatenameTagsTagname",
+        "description": "Add or update a specific template",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Template name",
+            "maxLength": 64,
+            "name": "templateName",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Name of the Template Tag",
+            "maxLength": 30,
+            "pattern": "/^[a-zA-Z][\\w-.]+$/",
+            "name": "tagName",
+            "in": "path",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Model 23"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a template tag",
+        "operationId": "deleteV4TemplatesTemplatenameTagsTagname",
+        "description": "Delete a specific template",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Template name",
+            "maxLength": 64,
+            "name": "templateName",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Name of the Template Tag",
+            "maxLength": 30,
+            "pattern": "/^[a-zA-Z][\\w-.]+$/",
+            "name": "tagName",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/commands/{namespace}/{name}/tags/{tagName}": {
+      "put": {
+        "summary": "Add or update a command tag",
+        "operationId": "putV4CommandsNamespaceNameTagsTagname",
+        "description": "Add or update a specific command",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Namespace of the Command",
+            "maxLength": 64,
+            "pattern": "/^[\\w-]+$/",
+            "name": "namespace",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Name of the Command",
+            "maxLength": 64,
+            "pattern": "/^[\\w-]+$/",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Name of the Command Tag",
+            "maxLength": 30,
+            "pattern": "/^[a-zA-Z][\\w-.]+$/",
+            "name": "tagName",
+            "in": "path",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Model 24"
+            }
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/v4/pipelines/{pipelineId}/tokens/{tokenId}/refresh": {
+      "put": {
+        "summary": "Refresh a pipeline token",
+        "operationId": "putV4PipelinesPipelineidTokensTokenidRefresh",
+        "description": "Update the value of a token while preserving its other metadata",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Identifier of this pipeline",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "pipelineId",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "x-constraint": {
+              "positive": true
+            },
+            "name": "tokenId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "v4"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Model 1": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "message": {
+          "type": "string",
+          "description": "Body of banner to display",
+          "example": "Due to planned upgrade of Kubernetes, Screwdriver will be down",
+          "maxLength": 512
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Flag if the banner is active",
+          "example": true
+        },
+        "createTime": {
+          "type": "string",
+          "description": "When this banner was created",
+          "example": "2017-01-06T01:49:50.384359267Z",
+          "maxLength": 32,
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "Username of user creating the banner",
+          "example": "batman123",
+          "maxLength": 128
+        },
+        "type": {
+          "type": "string",
+          "description": "Type/Severity of the banner message",
+          "example": "info",
+          "enum": [
+            "info",
+            "warn"
+          ],
+          "maxLength": 32
+        }
+      },
+      "required": [
+        "id",
+        "message",
+        "isActive",
+        "createTime",
+        "createdBy",
+        "type"
+      ]
+    },
+    "List Banners": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Model 1"
+      }
+    },
+    "scmOrganizations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "SCM organization name",
+        "example": "screwdriver-cd",
+        "maxLength": 100
+      }
+    },
+    "Get BuildCluster": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Identifier of this Job",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the build cluster",
+          "example": "iOS",
+          "maxLength": 50,
+          "pattern": "/^[\\w-]+$/"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the build cluster",
+          "example": "Build cluster for iOS team",
+          "maxLength": 100
+        },
+        "scmContext": {
+          "type": "string",
+          "description": "The SCM in which the repository exists",
+          "example": "github:github.com",
+          "maxLength": 128
+        },
+        "scmOrganizations": {
+          "$ref": "#/definitions/scmOrganizations",
+          "type": "array"
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Flag if the the build cluster is active",
+          "example": true
+        },
+        "managedByScrewdriver": {
+          "type": "boolean",
+          "description": "Flag if the cluster is managed by screwdriver team",
+          "example": true
+        },
+        "maintainer": {
+          "type": "string",
+          "description": "Maintainer of the Command",
+          "example": "foo@bar.com",
+          "maxLength": 64,
+          "x-format": {
+            "email": true
+          }
+        },
+        "weightage": {
+          "type": "number",
+          "description": "Weight percentage for build cluster",
+          "example": 20,
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "scmContext",
+        "scmOrganizations",
+        "isActive",
+        "managedByScrewdriver",
+        "maintainer",
+        "weightage"
+      ]
+    },
+    "List of build clusters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Get BuildCluster"
+      }
+    },
+    "pipelineIds": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "x-constraint": {
+          "positive": true
+        }
+      }
+    },
+    "Model 2": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "userId": {
+          "type": "integer",
+          "description": "User ID",
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "Collection name",
+          "example": "Favorites",
+          "maxLength": 128
+        },
+        "description": {
+          "type": "string",
+          "description": "Collection description",
+          "example": "List of my favorite pipelines",
+          "maxLength": 256
+        },
+        "pipelineIds": {
+          "$ref": "#/definitions/pipelineIds",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "name",
+        "pipelineIds"
+      ]
+    },
+    "List collections for requesting user": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Model 2"
+      }
+    },
+    "habitat": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "description": "Mode of the Habitat command",
+          "example": "remote",
+          "enum": [
+            "remote",
+            "local"
+          ]
+        },
+        "file": {
+          "type": "string",
+          "description": "File path of the Habitat artifact",
+          "example": "./foobar.hart",
+          "required": [
+            "file"
+          ],
+          "x-alternatives": [
+            {
+              "type": "string",
+              "description": "File path of the Habitat artifact",
+              "example": "./foobar.hart"
+            }
+          ]
+        },
+        "package": {
+          "type": "string",
+          "description": "Package of the Habitat command",
+          "example": "core/git/2.14.1"
+        },
+        "command": {
+          "type": "string",
+          "description": "Executable of the Habitat command",
+          "example": "git"
+        }
+      },
+      "required": [
+        "mode",
+        "package",
+        "command"
+      ]
+    },
+    "docker": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Image of the Docker command",
+          "example": "chefdk:1.2.3"
+        },
+        "command": {
+          "type": "string",
+          "description": "Executable of the Docker command",
+          "example": "knife",
+          "default": ""
+        }
+      },
+      "required": [
+        "image"
+      ]
+    },
+    "binary": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string",
+          "description": "File of the Binary command",
+          "example": "./foobar.sh"
+        }
+      },
+      "required": [
+        "file"
+      ]
+    },
+    "Get Command": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Identifier of this command",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace of the Command",
+          "example": "chefdk",
+          "maxLength": 64,
+          "pattern": "/^[\\w-]+$/"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the Command",
+          "example": "1.2",
+          "maxLength": 16,
+          "pattern": "/^(\\d+)(\\.\\d+)?(\\.\\d+)?$/"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the Command",
+          "example": "Installs npm modules",
+          "maxLength": 256
+        },
+        "maintainer": {
+          "type": "string",
+          "description": "Maintainer of the Command",
+          "example": "foo@bar.com",
+          "maxLength": 64,
+          "x-format": {
+            "email": true
+          }
+        },
+        "format": {
+          "type": "string",
+          "description": "Format of the Command",
+          "example": "habitat",
+          "enum": [
+            "habitat",
+            "docker",
+            "binary"
+          ],
+          "maxLength": 16
+        },
+        "habitat": {
+          "$ref": "#/definitions/habitat"
+        },
+        "docker": {
+          "$ref": "#/definitions/docker"
+        },
+        "binary": {
+          "$ref": "#/definitions/binary"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the Command",
+          "example": "knife",
+          "maxLength": 64,
+          "pattern": "/^[\\w-]+$/"
+        },
+        "pipelineId": {
+          "type": "integer",
+          "description": "Identifier of this pipeline",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "createTime": {
+          "type": "string",
+          "description": "When this command was created",
+          "example": "2038-01-19T03:14:08.131Z",
+          "maxLength": 32,
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "usage": {
+          "type": "string",
+          "description": "Usage and arguments of the command",
+          "example": "sd_cmd exec foo/bar@1 -h <host> -d <domain>",
+          "maxLength": 4096
+        },
+        "trusted": {
+          "type": "boolean",
+          "description": "Mark whether command is trusted"
+        }
+      },
+      "required": [
+        "id",
+        "namespace",
+        "version",
+        "description",
+        "maintainer",
+        "format",
+        "name",
+        "pipelineId"
+      ]
+    },
+    "List of commands": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Get Command"
+      }
+    },
+    "SCM Repository": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "screwdriver-cd/screwdriver"
+        },
+        "branch": {
+          "type": "string",
+          "example": "master"
+        },
+        "url": {
+          "type": "string",
+          "example": "https://github.com/screwdriver-cd/screwdriver/tree/master",
+          "x-format": {
+            "uri": true
+          }
+        },
+        "rootDir": {
+          "type": "string",
+          "description": "Root directory (relative to checkoutUrl)",
+          "example": "src/app/component",
+          "maxLength": 100
+        }
+      },
+      "required": [
+        "name",
+        "branch",
+        "url"
+      ]
+    },
+    "admins": {
+      "type": "object"
+    },
+    "Model 3": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "/^~([\\w-]+)$/",
+          "x-alternatives": [
+            {
+              "type": "string",
+              "pattern": "/^~([\\w-]+)$/"
+            },
+            {
+              "type": "string",
+              "maxLength": 100,
+              "pattern": "/^[\\w-]+$/"
+            },
+            {
+              "type": "string",
+              "pattern": "/^~(sd@\\d+:[\\w-]+|(pr|commit|release|tag)(:(.+))?)$/"
+            }
+          ]
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Model 3"
+      }
+    },
+    "Model 4": {
+      "type": "object",
+      "properties": {
+        "src": {
+          "type": "string",
+          "pattern": "/^~([\\w-]+)$/",
+          "x-alternatives": [
+            {
+              "type": "string",
+              "pattern": "/^~([\\w-]+)$/"
+            },
+            {
+              "type": "string",
+              "maxLength": 100,
+              "pattern": "/^[\\w-]+$/"
+            },
+            {
+              "type": "string",
+              "pattern": "/^~(sd@\\d+:[\\w-]+|(pr|commit|release|tag)(:(.+))?)$/"
+            }
+          ]
+        },
+        "dest": {
+          "type": "string",
+          "maxLength": 100,
+          "pattern": "/^[\\w-]+$/"
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Model 4"
+      }
+    },
+    "workflowGraph": {
+      "type": "object",
+      "description": "Graph representation of the workflow",
+      "properties": {
+        "nodes": {
+          "$ref": "#/definitions/nodes",
+          "type": "array"
+        },
+        "edges": {
+          "$ref": "#/definitions/edges",
+          "type": "array"
+        }
+      }
+    },
+    "scmUrls": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "/^(?:(?:https:\\/\\/(?:[^@\\/:\\s]+@)?)|git@)+([^\\/:\\s]+)(?:\\/|:)([^\\/:\\s]+)\\/([^\\s]+?)(?:\\.git)?(#[^\\s]+)?$/"
+      }
+    },
+    "childPipelines": {
+      "type": "object",
+      "description": "Configuration of child pipelines",
+      "properties": {
+        "scmUrls": {
+          "$ref": "#/definitions/scmUrls",
+          "type": "array"
+        },
+        "startAll": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "scmUrls"
+      ]
+    },
+    "Get Pipeline": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Identifier of this pipeline",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "name": {
+          "type": "string",
+          "example": "screwdriver-cd/screwdriver"
+        },
+        "scmUri": {
+          "type": "string",
+          "description": "Unique identifier for the application",
+          "example": "github.com:123456:master",
+          "maxLength": 128,
+          "pattern": "/^([^:]+):([^:]+):([^:]+)(?::([^:]+))?$/"
+        },
+        "scmContext": {
+          "type": "string",
+          "description": "The SCM in which the repository exists",
+          "example": "github:github.com",
+          "maxLength": 128
+        },
+        "scmRepo": {
+          "$ref": "#/definitions/SCM Repository"
+        },
+        "createTime": {
+          "type": "string",
+          "description": "When this pipeline was created",
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "admins": {
+          "$ref": "#/definitions/admins"
+        },
+        "workflowGraph": {
+          "$ref": "#/definitions/workflowGraph"
+        },
+        "annotations": {
+          "$ref": "#/definitions/admins"
+        },
+        "lastEventId": {
+          "type": "integer",
+          "description": "Identifier of last event",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "configPipelineId": {
+          "type": "integer",
+          "description": "Identifier of pipeline containing external configuration",
+          "example": 123,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "childPipelines": {
+          "$ref": "#/definitions/childPipelines"
+        },
+        "prChain": {
+          "type": "boolean",
+          "description": "Configuration of chainPR",
+          "default": false
+        }
+      },
+      "required": [
+        "id",
+        "scmUri",
+        "scmContext",
+        "createTime",
+        "admins"
+      ]
+    },
+    "List of Pipelines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Get Pipeline"
+      }
+    },
+    "Requests Object": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "description": "Total number of requests",
+          "example": 100
+        },
+        "timeouts": {
+          "type": "integer",
+          "description": "Number of timeouts",
+          "example": 0
+        },
+        "success": {
+          "type": "integer",
+          "description": "Number of successes",
+          "example": 95
+        },
+        "failure": {
+          "type": "integer",
+          "description": "Number of failures",
+          "example": "5"
+        },
+        "concurrent": {
+          "type": "integer",
+          "description": "Number of concurrent requests",
+          "example": 0
+        },
+        "averageTime": {
+          "type": "number",
+          "example": 5.3134
+        }
+      }
+    },
+    "Breaker Object": {
+      "type": "object",
+      "properties": {
+        "isClosed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Executor Object": {
+      "type": "object",
+      "properties": {
+        "requests": {
+          "$ref": "#/definitions/Requests Object"
+        },
+        "breaker": {
+          "$ref": "#/definitions/Breaker Object"
+        }
+      }
+    },
+    "Stats Object": {
+      "type": "object",
+      "properties": {
+        "executor": {
+          "$ref": "#/definitions/Executor Object"
+        },
+        "scm": {
+          "$ref": "#/definitions/admins"
+        }
+      }
+    },
+    "labels": {
+      "type": "array",
+      "description": "Labels for template",
+      "example": [
+        "stable",
+        "latest",
+        "beta"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "Model 5": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "/^~([\\w-]+)$/",
+        "x-alternatives": [
+          {
+            "type": "string",
+            "pattern": "/^~([\\w-]+)$/"
+          },
+          {
+            "type": "string",
+            "maxLength": 100,
+            "pattern": "/^[\\w-]+$/"
+          },
+          {
+            "type": "string",
+            "pattern": "/^~(sd@\\d+:[\\w-]+|(pr|commit|release|tag)(:(.+))?)$/"
+          }
+        ]
+      }
+    },
+    "Model 6": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "/^~([\\w-]+)$/",
+        "x-alternatives": [
+          {
+            "type": "string",
+            "pattern": "/^~([\\w-]+)$/"
+          },
+          {
+            "type": "string",
+            "pattern": "/^~sd@(\\d+):([\\w-]+)$/"
+          }
+        ]
+      }
+    },
+    "Model 7": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "secrets": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "string",
+        "maxLength": 64,
+        "pattern": "/^[A-Z_][A-Z0-9_]*$/"
+      }
+    },
+    "Model 8": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 100
+      }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "x-alternatives": [
+          {
+            "type": "string"
+          },
+          {
+            "$ref": "#/x-alt-definitions/Model 3"
+          }
+        ]
+      }
+    },
+    "config": {
+      "type": "object",
+      "default": {},
+      "properties": {
+        "annotations": {
+          "$ref": "#/definitions/admins"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "environment": {
+          "$ref": "#/definitions/admins"
+        },
+        "image": {
+          "type": "string",
+          "pattern": "/^[^;&|><*?`$()!#'\" ]+$/"
+        },
+        "matrix": {
+          "$ref": "#/definitions/admins"
+        },
+        "requires": {
+          "$ref": "#/definitions/Model 5",
+          "type": "array",
+          "x-alternatives": [
+            {
+              "$ref": "#/x-alt-definitions/requires",
+              "type": "array"
+            },
+            {
+              "type": "string",
+              "pattern": "/^~([\\w-]+)$/",
+              "x-alternatives": [
+                {
+                  "type": "string",
+                  "pattern": "/^~([\\w-]+)$/"
+                },
+                {
+                  "type": "string",
+                  "maxLength": 100,
+                  "pattern": "/^[\\w-]+$/"
+                },
+                {
+                  "type": "string",
+                  "pattern": "/^~(sd@\\d+:[\\w-]+|(pr|commit|release|tag)(:(.+))?)$/"
+                }
+              ]
+            }
+          ]
+        },
+        "blockedBy": {
+          "$ref": "#/definitions/Model 6",
+          "type": "array",
+          "x-alternatives": [
+            {
+              "$ref": "#/x-alt-definitions/blockedBy",
+              "type": "array"
+            },
+            {
+              "type": "string",
+              "pattern": "/^~([\\w-]+)$/",
+              "x-alternatives": [
+                {
+                  "type": "string",
+                  "pattern": "/^~([\\w-]+)$/"
+                },
+                {
+                  "type": "string",
+                  "pattern": "/^~sd@(\\d+):([\\w-]+)$/"
+                }
+              ]
+            }
+          ]
+        },
+        "freezeWindows": {
+          "$ref": "#/definitions/Model 7",
+          "type": "array",
+          "x-alternatives": [
+            {
+              "$ref": "#/x-alt-definitions/freezeWindows",
+              "type": "array"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "secrets": {
+          "$ref": "#/definitions/secrets",
+          "type": "array"
+        },
+        "settings": {
+          "$ref": "#/definitions/admins"
+        },
+        "sourcePaths": {
+          "$ref": "#/definitions/Model 8",
+          "type": "array",
+          "optional": [
+            "sourcePaths"
+          ],
+          "x-alternatives": [
+            {
+              "$ref": "#/x-alt-definitions/sourcePaths",
+              "type": "array"
+            },
+            {
+              "type": "string",
+              "maxLength": 100
+            }
+          ]
+        },
+        "steps": {
+          "$ref": "#/definitions/steps",
+          "type": "array"
+        },
+        "template": {
+          "type": "string",
+          "pattern": "/^([\\w\\/-]+)(?:@((?:(?:\\d+)(?:\\.\\d+)?(?:\\.\\d+)?)|(?:[a-zA-Z][\\w-]+)))?$/"
+        }
+      }
+    },
+    "Get Template": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Identifier of this template",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "labels": {
+          "$ref": "#/definitions/labels",
+          "type": "array"
+        },
+        "config": {
+          "$ref": "#/definitions/config"
+        },
+        "name": {
+          "type": "string",
+          "description": "Template name",
+          "example": "nodejs/lib",
+          "maxLength": 64
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the Template",
+          "example": "1.2",
+          "maxLength": 16,
+          "pattern": "/^(\\d+)(\\.\\d+)?(\\.\\d+)?$/"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the Template",
+          "example": "Installs npm modules",
+          "maxLength": 256
+        },
+        "maintainer": {
+          "type": "string",
+          "description": "Maintainer of the Template",
+          "example": "foo@bar.com",
+          "maxLength": 64,
+          "x-format": {
+            "email": true
+          }
+        },
+        "pipelineId": {
+          "type": "integer",
+          "description": "Identifier of this pipeline",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace of the Template",
+          "example": "node",
+          "maxLength": 64,
+          "pattern": "/^[\\w-]+$/"
+        },
+        "images": {
+          "$ref": "#/definitions/admins"
+        },
+        "createTime": {
+          "type": "string",
+          "description": "When this template was created",
+          "example": "2038-01-19T03:14:08.131Z",
+          "maxLength": 32,
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "trusted": {
+          "type": "boolean",
+          "description": "Mark whether template is trusted"
+        }
+      },
+      "required": [
+        "id",
+        "labels",
+        "name",
+        "version",
+        "description",
+        "maintainer",
+        "pipelineId"
+      ]
+    },
+    "List of templates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Get Template"
+      }
+    },
+    "Get tokens": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "Token name",
+          "example": "Mobile token",
+          "maxLength": 128
+        },
+        "description": {
+          "type": "string",
+          "description": "Token description",
+          "example": "Used to authenticate the mobile app",
+          "maxLength": 256
+        },
+        "lastUsed": {
+          "type": "string",
+          "description": "Last used",
+          "x-format": {
+            "isoDate": true
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "lastUsed"
+      ]
+    },
+    "Model 9": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Get tokens"
+      }
+    },
+    "List of package versions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Package and its version"
+      }
+    },
+    "License Object": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "repository": {
+          "type": "string"
+        },
+        "licenses": {
+          "type": "string"
+        }
+      }
+    },
+    "List of Licenses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/License Object"
+      }
+    },
+    "Versions Object": {
+      "type": "object",
+      "properties": {
+        "versions": {
+          "$ref": "#/definitions/List of package versions",
+          "type": "array"
+        },
+        "licenses": {
+          "$ref": "#/definitions/List of Licenses",
+          "type": "array"
+        }
+      }
+    },
+    "Context Object": {
+      "type": "object",
+      "properties": {
+        "context": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        }
+      }
+    },
+    "Array of Contexts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Context Object"
+      }
+    },
+    "Crumb to prevent CSRF Object": {
+      "type": "object",
+      "properties": {
+        "crumb": {
+          "type": "string"
+        }
+      }
+    },
+    "Public Key for Verifying JWTs Object": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        }
+      }
+    },
+    "Model 10": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/admins"
+      }
+    },
+    "Author of the commit": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "example": "https://github.com/stjohnjohnson",
+          "x-format": {
+            "uri": true
+          }
+        },
+        "name": {
+          "type": "string",
+          "example": "Dao Lam"
+        },
+        "username": {
+          "type": "string",
+          "example": "d2lam"
+        },
+        "avatar": {
+          "type": "string",
+          "example": "https://avatars.githubusercontent.com/u/622065?v=3",
+          "x-format": {
+            "uri": true
+          }
+        }
+      },
+      "required": [
+        "name",
+        "username"
+      ]
+    },
+    "SCM Commit": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Fixing a bug with signing"
+        },
+        "author": {
+          "$ref": "#/definitions/Author of the commit"
+        },
+        "committer": {
+          "$ref": "#/definitions/Author of the commit"
+        },
+        "url": {
+          "type": "string",
+          "example": "https://github.com/screwdriver-cd/screwdriver/commit/8843d7f92416211de",
+          "x-format": {
+            "uri": true
+          }
+        }
+      },
+      "required": [
+        "message",
+        "author",
+        "url"
+      ]
+    },
+    "Get Step metadata": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Identifier of this Step",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "buildId": {
+          "type": "integer",
+          "description": "Identifier of the parent Build",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the Step",
+          "example": "install",
+          "maxLength": 64
+        },
+        "command": {
+          "type": "string",
+          "description": "Command of the Step to execute",
+          "example": "npm install"
+        },
+        "code": {
+          "type": "integer",
+          "description": "Exit code",
+          "example": 1
+        },
+        "startTime": {
+          "type": "string",
+          "description": "When this Step started",
+          "example": "2017-01-06T01:49:50.384359267Z",
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "endTime": {
+          "type": "string",
+          "description": "When this Step stopped running",
+          "example": "2017-01-06T01:49:51.676057192Z",
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "lines": {
+          "type": "integer",
+          "description": "Number of Step log lines",
+          "example": 100
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "Model 11": {
+      "type": "array",
+      "description": "List of steps",
+      "items": {
+        "$ref": "#/definitions/Get Step metadata"
+      }
+    },
+    "stats": {
+      "type": "object",
+      "description": "Stats for this build",
+      "properties": {
+        "queueEnterTime": {
+          "type": "string",
+          "description": "When this build enters queue",
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "blockedStartTime": {
+          "type": "string",
+          "description": "When this build is blocked",
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "imagePullStartTime": {
+          "type": "string",
+          "description": "When this build starts pulling image",
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "hostname": {
+          "type": "string",
+          "description": "Where this build is run"
+        }
+      }
+    },
+    "Get Build": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Identifier of this build",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "environment": {
+          "$ref": "#/definitions/Model 10",
+          "type": "array",
+          "x-alternatives": [
+            {
+              "$ref": "#/x-alt-definitions/environment",
+              "type": "array"
+            },
+            {
+              "$ref": "#/x-alt-definitions/Model 3"
+            }
+          ]
+        },
+        "eventId": {
+          "type": "integer",
+          "description": "Identifier of the parent event",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "jobId": {
+          "type": "integer",
+          "description": "Identifier of the parent job",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "parentBuildId": {
+          "$ref": "#/definitions/pipelineIds",
+          "type": "array",
+          "x-alternatives": [
+            {
+              "$ref": "#/x-alt-definitions/parentBuildId",
+              "type": "array"
+            },
+            {
+              "type": "integer",
+              "x-constraint": {
+                "positive": true
+              }
+            }
+          ]
+        },
+        "number": {
+          "type": "number",
+          "description": "Timestamp of create time",
+          "example": 1473900790309,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "container": {
+          "type": "string",
+          "description": "Container this build is running in",
+          "example": "node:4"
+        },
+        "cause": {
+          "type": "string",
+          "description": "Reason why this build started",
+          "example": "pull request opened"
+        },
+        "sha": {
+          "type": "string",
+          "description": "SHA this project was built on",
+          "example": "ccc49349d3cffbd12ea9e3d41521480b4aa5de5f",
+          "pattern": "/^[a-f0-9]+$/i",
+          "x-format": {
+            "hex": true
+          }
+        },
+        "commit": {
+          "$ref": "#/definitions/SCM Commit"
+        },
+        "createTime": {
+          "type": "string",
+          "description": "When this build was created",
+          "maxLength": 32,
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "startTime": {
+          "type": "string",
+          "description": "When this build started on a build machine",
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "endTime": {
+          "type": "string",
+          "description": "When this build stopped running",
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "parameters": {
+          "$ref": "#/definitions/admins"
+        },
+        "meta": {
+          "$ref": "#/definitions/admins"
+        },
+        "steps": {
+          "$ref": "#/definitions/Model 11",
+          "type": "array"
+        },
+        "status": {
+          "type": "string",
+          "description": "Current status of the build",
+          "example": "SUCCESS",
+          "enum": [
+            "ABORTED",
+            "CREATED",
+            "FAILURE",
+            "QUEUED",
+            "RUNNING",
+            "SUCCESS",
+            "BLOCKED",
+            "UNSTABLE",
+            "COLLAPSED",
+            "FROZEN"
+          ]
+        },
+        "statusMessage": {
+          "type": "string",
+          "description": "Status message to describe status of the build",
+          "example": "Build failed due to infrastructure error"
+        },
+        "stats": {
+          "$ref": "#/definitions/stats"
+        },
+        "buildClusterName": {
+          "type": "string",
+          "description": "Name of the build cluster",
+          "example": "iOS",
+          "maxLength": 50,
+          "pattern": "/^[\\w-]+$/"
+        }
+      },
+      "required": [
+        "id",
+        "jobId",
+        "number",
+        "cause",
+        "createTime",
+        "status"
+      ]
+    },
+    "lastBuilds": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Get Build"
+      }
+    },
+    "prs": {
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "failing": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "Model 12": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Identifier of this pipeline",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "name": {
+          "type": "string",
+          "example": "screwdriver-cd/screwdriver"
+        },
+        "scmUri": {
+          "type": "string",
+          "description": "Unique identifier for the application",
+          "example": "github.com:123456:master",
+          "maxLength": 128,
+          "pattern": "/^([^:]+):([^:]+):([^:]+)(?::([^:]+))?$/"
+        },
+        "scmContext": {
+          "type": "string",
+          "description": "The SCM in which the repository exists",
+          "example": "github:github.com",
+          "maxLength": 128
+        },
+        "scmRepo": {
+          "$ref": "#/definitions/SCM Repository"
+        },
+        "createTime": {
+          "type": "string",
+          "description": "When this pipeline was created",
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "admins": {
+          "$ref": "#/definitions/admins"
+        },
+        "workflowGraph": {
+          "$ref": "#/definitions/workflowGraph"
+        },
+        "annotations": {
+          "$ref": "#/definitions/admins"
+        },
+        "lastEventId": {
+          "type": "integer",
+          "description": "Identifier of last event",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "configPipelineId": {
+          "type": "integer",
+          "description": "Identifier of pipeline containing external configuration",
+          "example": 123,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "childPipelines": {
+          "$ref": "#/definitions/childPipelines"
+        },
+        "prChain": {
+          "type": "boolean",
+          "description": "Configuration of chainPR",
+          "default": false
+        },
+        "lastBuilds": {
+          "$ref": "#/definitions/lastBuilds",
+          "type": "array"
+        },
+        "prs": {
+          "$ref": "#/definitions/prs"
+        }
+      },
+      "required": [
+        "id",
+        "scmUri",
+        "scmContext",
+        "createTime"
+      ]
+    },
+    "pipelines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Model 12"
+      }
+    },
+    "Get collection": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "Collection name",
+          "example": "Favorites",
+          "maxLength": 128
+        },
+        "description": {
+          "type": "string",
+          "description": "Collection description",
+          "example": "List of my favorite pipelines",
+          "maxLength": 256
+        },
+        "pipelineIds": {
+          "$ref": "#/definitions/pipelineIds",
+          "type": "array"
+        },
+        "pipelines": {
+          "$ref": "#/definitions/pipelines",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "pipelineIds",
+        "pipelines"
+      ]
+    },
+    "Model 13": {
+      "type": "object",
+      "description": "Commit related to the event",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Fixing a bug with signing"
+        },
+        "author": {
+          "$ref": "#/definitions/Author of the commit"
+        },
+        "committer": {
+          "$ref": "#/definitions/Author of the commit"
+        },
+        "url": {
+          "type": "string",
+          "example": "https://github.com/screwdriver-cd/screwdriver/commit/8843d7f92416211de",
+          "x-format": {
+            "uri": true
+          }
+        }
+      },
+      "required": [
+        "message",
+        "url"
+      ]
+    },
+    "SCM User": {
+      "type": "object",
+      "description": "Creator of the event",
+      "properties": {
+        "url": {
+          "type": "string",
+          "example": "https://github.com/stjohnjohnson",
+          "x-format": {
+            "uri": true
+          }
+        },
+        "name": {
+          "type": "string",
+          "example": "Dao Lam"
+        },
+        "username": {
+          "type": "string",
+          "example": "d2lam"
+        },
+        "avatar": {
+          "type": "string",
+          "example": "https://avatars.githubusercontent.com/u/622065?v=3",
+          "x-format": {
+            "uri": true
+          }
+        }
+      },
+      "required": [
+        "name",
+        "username"
+      ]
+    },
+    "Model 14": {
+      "type": "object",
+      "description": "Graph representation of the workflow",
+      "example": {
+        "nodes": [
+          {
+            "name": "~commit"
+          },
+          {
+            "name": "main"
+          },
+          {
+            "name": "publish"
+          }
+        ],
+        "edges": [
+          {
+            "src": "~commit",
+            "dest": "main"
+          },
+          {
+            "src": "main",
+            "dest": "publish"
+          }
+        ]
+      },
+      "properties": {
+        "nodes": {
+          "$ref": "#/definitions/nodes",
+          "type": "array"
+        },
+        "edges": {
+          "$ref": "#/definitions/edges",
+          "type": "array"
+        }
+      }
+    },
+    "SCM Pull Request": {
+      "type": "object",
+      "description": "Pull request object that holds information about the pull request",
+      "properties": {
+        "url": {
+          "type": "string",
+          "example": "https://github.com/screwdriver-cd/screwdriver/pull/1",
+          "x-format": {
+            "uri": true
+          }
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "ref": {
+          "type": "string"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date",
+          "example": "2018-10-10T21:35:31Z"
+        },
+        "username": {
+          "type": "string",
+          "example": "d2lam"
+        },
+        "userProfile": {
+          "type": "string",
+          "example": "https://github.com/anonymous",
+          "x-format": {
+            "uri": true
+          }
+        },
+        "baseBranch": {
+          "type": "string",
+          "example": "master"
+        }
+      }
+    },
+    "Get Event": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Identifier of this event",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "parentEventId": {
+          "type": "integer",
+          "description": "Identifier of the parent event",
+          "example": 123344,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "causeMessage": {
+          "type": "string",
+          "description": "Message that describes why the event was created",
+          "example": "Merge pull request #26 from screwdriver-cd/data-schema",
+          "maxLength": 512
+        },
+        "commit": {
+          "$ref": "#/definitions/Model 13"
+        },
+        "createTime": {
+          "type": "string",
+          "description": "When this event was created",
+          "example": "2038-01-19T03:14:08.131Z",
+          "maxLength": 32,
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "creator": {
+          "$ref": "#/definitions/SCM User"
+        },
+        "meta": {
+          "$ref": "#/definitions/admins"
+        },
+        "pipelineId": {
+          "type": "integer",
+          "description": "Identifier of this pipeline",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "sha": {
+          "type": "string",
+          "description": "SHA this project was built on",
+          "example": "ccc49349d3cffbd12ea9e3d41521480b4aa5de5f",
+          "pattern": "/^[a-f0-9]+$/i",
+          "x-constraint": {
+            "length": 40
+          },
+          "x-format": {
+            "hex": true
+          }
+        },
+        "configPipelineSha": {
+          "type": "string",
+          "description": "SHA of the configuration pipeline this project depends on",
+          "example": "ccc49349d3cffbd12ea9e3d41521480b4aa5de5f",
+          "pattern": "/^[a-f0-9]+$/i",
+          "x-constraint": {
+            "length": 40
+          },
+          "x-format": {
+            "hex": true
+          }
+        },
+        "startFrom": {
+          "type": "string",
+          "description": "Event start point - a job name or trigger name (~commit/~pr)",
+          "example": "main"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of the event",
+          "example": "pr",
+          "enum": [
+            "pr",
+            "pipeline"
+          ],
+          "maxLength": 10
+        },
+        "workflowGraph": {
+          "$ref": "#/definitions/Model 14"
+        },
+        "pr": {
+          "$ref": "#/definitions/SCM Pull Request"
+        },
+        "prNum": {
+          "type": "integer",
+          "description": "Pull request number if it is a PR event",
+          "x-constraint": {
+            "positive": true
+          }
+        }
+      },
+      "required": [
+        "id",
+        "commit",
+        "createTime",
+        "creator",
+        "pipelineId",
+        "sha",
+        "type"
+      ]
+    },
+    "event": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "x-format": {
+          "uri": {
+            "relativeOnly": true
+          }
+        }
+      }
+    },
+    "cache": {
+      "type": "object",
+      "properties": {
+        "event": {
+          "$ref": "#/definitions/event",
+          "type": "array"
+        },
+        "pipeline": {
+          "$ref": "#/definitions/event",
+          "type": "array"
+        },
+        "job": {
+          "$ref": "#/definitions/event",
+          "type": "array"
+        }
+      }
+    },
+    "Named command to execute": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "command": {
+          "type": "string"
+        }
+      }
+    },
+    "List of named commands to execute": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/Named command to execute"
+      }
+    },
+    "Job permutation": {
+      "type": "object",
+      "properties": {
+        "annotations": {
+          "$ref": "#/definitions/admins"
+        },
+        "cache": {
+          "$ref": "#/definitions/cache"
+        },
+        "commands": {
+          "$ref": "#/definitions/List of named commands to execute",
+          "type": "array"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "environment": {
+          "$ref": "#/definitions/admins"
+        },
+        "image": {
+          "type": "string",
+          "pattern": "/^[^;&|><*?`$()!#'\" ]+$/"
+        },
+        "requires": {
+          "$ref": "#/definitions/Model 5",
+          "type": "array",
+          "x-alternatives": [
+            {
+              "$ref": "#/x-alt-definitions/requires",
+              "type": "array"
+            },
+            {
+              "type": "string",
+              "pattern": "/^~([\\w-]+)$/",
+              "x-alternatives": [
+                {
+                  "type": "string",
+                  "pattern": "/^~([\\w-]+)$/"
+                },
+                {
+                  "type": "string",
+                  "maxLength": 100,
+                  "pattern": "/^[\\w-]+$/"
+                },
+                {
+                  "type": "string",
+                  "pattern": "/^~(sd@\\d+:[\\w-]+|(pr|commit|release|tag)(:(.+))?)$/"
+                }
+              ]
+            }
+          ]
+        },
+        "blockedBy": {
+          "$ref": "#/definitions/Model 6",
+          "type": "array",
+          "x-alternatives": [
+            {
+              "$ref": "#/x-alt-definitions/blockedBy",
+              "type": "array"
+            },
+            {
+              "type": "string",
+              "pattern": "/^~([\\w-]+)$/",
+              "x-alternatives": [
+                {
+                  "type": "string",
+                  "pattern": "/^~([\\w-]+)$/"
+                },
+                {
+                  "type": "string",
+                  "pattern": "/^~sd@(\\d+):([\\w-]+)$/"
+                }
+              ]
+            }
+          ]
+        },
+        "secrets": {
+          "$ref": "#/definitions/secrets",
+          "type": "array"
+        },
+        "settings": {
+          "$ref": "#/definitions/admins"
+        },
+        "sourcePaths": {
+          "$ref": "#/definitions/Model 8",
+          "type": "array",
+          "optional": [
+            "sourcePaths"
+          ],
+          "x-alternatives": [
+            {
+              "$ref": "#/x-alt-definitions/sourcePaths",
+              "type": "array"
+            },
+            {
+              "type": "string",
+              "maxLength": 100
+            }
+          ]
+        },
+        "freezeWindows": {
+          "$ref": "#/definitions/Model 7",
+          "type": "array",
+          "x-alternatives": [
+            {
+              "$ref": "#/x-alt-definitions/freezeWindows",
+              "type": "array"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        }
+      }
+    },
+    "List of job permutations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Job permutation"
+      }
+    },
+    "Get Job": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date",
+          "example": "2018-10-10T21:35:31Z"
+        },
+        "username": {
+          "type": "string",
+          "example": "d2lam"
+        },
+        "userProfile": {
+          "type": "string",
+          "example": "https://github.com/anonymous",
+          "x-format": {
+            "uri": true
+          }
+        },
+        "url": {
+          "type": "string",
+          "example": "https://github.com/screwdriver-cd/screwdriver/pull/1",
+          "x-format": {
+            "uri": true
+          }
+        },
+        "id": {
+          "type": "integer",
+          "description": "Identifier of this Job",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the Job",
+          "example": "main",
+          "maxLength": 110,
+          "pattern": "/^(PR-[0-9]+:)?[\\w-]+$/"
+        },
+        "prParentJobId": {
+          "type": "integer",
+          "description": "Identifier of the parent job for this pr job",
+          "example": 98765,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "permutations": {
+          "$ref": "#/definitions/List of job permutations",
+          "type": "array"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the Job",
+          "example": "builds and tests the code",
+          "maxLength": 100
+        },
+        "pipelineId": {
+          "type": "integer",
+          "description": "Identifier of this Pipeline",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "state": {
+          "type": "string",
+          "description": "Current state of the Job",
+          "example": "ENABLED",
+          "default": "ENABLED",
+          "enum": [
+            "ENABLED",
+            "DISABLED"
+          ],
+          "maxLength": 10
+        },
+        "stateChanger": {
+          "type": "string",
+          "description": "Username for who changed the state",
+          "maxLength": 128
+        },
+        "stateChangeTime": {
+          "type": "string",
+          "description": "When the state of the job was changed",
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "stateChangeMessage": {
+          "type": "string",
+          "description": "Reason why disabling or enabling job",
+          "example": "Testing out new feature change in beta only",
+          "maxLength": 512
+        },
+        "archived": {
+          "type": "boolean",
+          "description": "Flag if the job is archived",
+          "example": true,
+          "default": false
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "pipelineId",
+        "state"
+      ]
+    },
+    "Get Secret": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Identifier of this secret",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "pipelineId": {
+          "type": "integer",
+          "description": "pipeline associated with the secret",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the secret",
+          "example": "NPM_TOKEN",
+          "maxLength": 64,
+          "pattern": "/^[A-Z_][A-Z0-9_]*$/"
+        },
+        "value": {
+          "type": "string",
+          "description": "value of the secret",
+          "example": "2d991790bab1ac8576097ca87f170df73410b55c"
+        },
+        "allowInPR": {
+          "type": "boolean",
+          "description": "flag to denote if the secret can be shown in PR builds"
+        }
+      },
+      "required": [
+        "id",
+        "pipelineId",
+        "name",
+        "allowInPR"
+      ]
+    },
+    "JSON Web Token Object": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "List of secrets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Get Secret"
+      }
+    },
+    "triggers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 64,
+        "pattern": "/^~sd@(\\d+):([\\w-]+)$/"
+      }
+    },
+    "Model 15": {
+      "type": "object",
+      "properties": {
+        "jobName": {
+          "type": "string",
+          "pattern": "/^[\\w-]+$/"
+        },
+        "triggers": {
+          "$ref": "#/definitions/triggers",
+          "type": "array"
+        }
+      }
+    },
+    "List of triggers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Model 15"
+      }
+    },
+    "List of jobs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Get Job"
+      }
+    },
+    "List of events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Get Event"
+      }
+    },
+    "TemplateTag": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Identifier of this template tag",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "createTime": {
+          "type": "string",
+          "description": "When this template tag was created",
+          "example": "2038-01-19T03:14:08.131Z",
+          "maxLength": 32,
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace of the Template",
+          "example": "node",
+          "maxLength": 64,
+          "pattern": "/^[\\w-]+$/"
+        },
+        "name": {
+          "type": "string",
+          "description": "Template name",
+          "example": "nodejs/lib",
+          "maxLength": 64
+        },
+        "tag": {
+          "type": "string",
+          "description": "Name of the Template Tag",
+          "example": "latest",
+          "maxLength": 30,
+          "pattern": "/^[a-zA-Z][\\w-.]+$/"
+        },
+        "version": {
+          "type": "string",
+          "description": "Exact version of the Template",
+          "example": "1.2.3",
+          "maxLength": 16,
+          "pattern": "/^(\\d+)\\.(\\d+)\\.(\\d+)$/"
+        }
+      }
+    },
+    "Model 16": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TemplateTag"
+      }
+    },
+    "CommandTag": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Identifier of this command tag",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "createTime": {
+          "type": "string",
+          "description": "When this command tag was created",
+          "example": "2038-01-19T03:14:08.131Z",
+          "maxLength": 32,
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace of the Command",
+          "example": "chefdk",
+          "maxLength": 64,
+          "pattern": "/^[\\w-]+$/"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the Command",
+          "example": "knife",
+          "maxLength": 64,
+          "pattern": "/^[\\w-]+$/"
+        },
+        "tag": {
+          "type": "string",
+          "description": "Name of the Command Tag",
+          "example": "latest",
+          "maxLength": 30,
+          "pattern": "/^[a-zA-Z][\\w-.]+$/"
+        },
+        "version": {
+          "type": "string",
+          "description": "Exact version of the Command",
+          "example": "1.2.3",
+          "maxLength": 16,
+          "pattern": "/^(\\d+)\\.(\\d+)\\.(\\d+)$/"
+        }
+      }
+    },
+    "List of command tags": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/CommandTag"
+      }
+    },
+    "Log Line": {
+      "type": "object",
+      "properties": {
+        "n": {
+          "type": "integer",
+          "description": "Numbered line number since the start of the step",
+          "example": 15
+        },
+        "t": {
+          "type": "number",
+          "description": "Unix timestamp of the log line",
+          "example": 1472084645.33,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "m": {
+          "type": "string",
+          "description": "Line Message"
+        }
+      }
+    },
+    "List of Log Lines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Log Line"
+      }
+    },
+    "Create Banner": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "Body of banner to display",
+          "example": "Due to planned upgrade of Kubernetes, Screwdriver will be down",
+          "maxLength": 512
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Flag if the banner is active",
+          "example": true
+        },
+        "type": {
+          "type": "string",
+          "description": "Type/Severity of the banner message",
+          "example": "info",
+          "enum": [
+            "info",
+            "warn"
+          ],
+          "maxLength": 32
+        }
+      },
+      "required": [
+        "message"
+      ]
+    },
+    "Create Build": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the build cluster",
+          "example": "iOS",
+          "maxLength": 50,
+          "pattern": "/^[\\w-]+$/"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the build cluster",
+          "example": "Build cluster for iOS team",
+          "maxLength": 100
+        },
+        "scmOrganizations": {
+          "$ref": "#/definitions/scmOrganizations",
+          "type": "array"
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Flag if the the build cluster is active",
+          "example": true
+        },
+        "managedByScrewdriver": {
+          "type": "boolean",
+          "description": "Flag if the cluster is managed by screwdriver team",
+          "example": true
+        },
+        "maintainer": {
+          "type": "string",
+          "description": "Maintainer of the Command",
+          "example": "foo@bar.com",
+          "maxLength": 64,
+          "x-format": {
+            "email": true
+          }
+        },
+        "weightage": {
+          "type": "number",
+          "description": "Weight percentage for build cluster",
+          "example": 20,
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "required": [
+        "name",
+        "scmOrganizations",
+        "managedByScrewdriver",
+        "maintainer"
+      ]
+    },
+    "Model 17": {
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "type": "integer",
+          "description": "Identifier of the parent job",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "meta": {
+          "$ref": "#/definitions/admins"
+        },
+        "stats": {
+          "$ref": "#/definitions/stats"
+        }
+      },
+      "required": [
+        "jobId"
+      ]
+    },
+    "Create collection": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Collection name",
+          "example": "Favorites",
+          "maxLength": 128
+        },
+        "description": {
+          "type": "string",
+          "description": "Collection description",
+          "example": "List of my favorite pipelines",
+          "maxLength": 256
+        },
+        "pipelineIds": {
+          "$ref": "#/definitions/pipelineIds",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "Create Event": {
+      "type": "object",
+      "properties": {
+        "parentEventId": {
+          "type": "integer",
+          "description": "Identifier of the parent event",
+          "example": 123344,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "causeMessage": {
+          "type": "string",
+          "description": "Message that describes why the event was created",
+          "example": "Merge pull request #26 from screwdriver-cd/data-schema",
+          "maxLength": 512
+        },
+        "creator": {
+          "$ref": "#/definitions/SCM User"
+        },
+        "meta": {
+          "$ref": "#/definitions/admins"
+        },
+        "pipelineId": {
+          "type": "integer",
+          "description": "Identifier of this pipeline",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "configPipelineSha": {
+          "type": "string",
+          "description": "SHA of the configuration pipeline this project depends on",
+          "example": "ccc49349d3cffbd12ea9e3d41521480b4aa5de5f",
+          "pattern": "/^[a-f0-9]+$/i",
+          "x-constraint": {
+            "length": 40
+          },
+          "x-format": {
+            "hex": true
+          }
+        },
+        "startFrom": {
+          "type": "string",
+          "pattern": "/^~(sd@\\d+:[\\w-]+|(pr|commit|release|tag)(:(.+))?)$/",
+          "x-alternatives": [
+            {
+              "type": "string",
+              "pattern": "/^~(sd@\\d+:[\\w-]+|(pr|commit|release|tag)(:(.+))?)$/"
+            },
+            {
+              "type": "string",
+              "description": "Name of the Job",
+              "example": "main",
+              "maxLength": 110,
+              "pattern": "/^(PR-[0-9]+:)?[\\w-]+$/"
+            }
+          ]
+        },
+        "prNum": {
+          "type": "integer",
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "buildId": {
+          "type": "integer",
+          "description": "Identifier of this build",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "parentBuildId": {
+          "$ref": "#/definitions/pipelineIds",
+          "type": "array",
+          "x-alternatives": [
+            {
+              "$ref": "#/x-alt-definitions/parentBuildId",
+              "type": "array"
+            },
+            {
+              "type": "integer",
+              "x-constraint": {
+                "positive": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    "Create Pipeline": {
+      "type": "object",
+      "properties": {
+        "checkoutUrl": {
+          "type": "string",
+          "description": "Checkout url for the application",
+          "example": "git@github.com:screwdriver-cd/data-schema.git#master",
+          "pattern": "/^(?:(?:https:\\/\\/(?:[^@\\/:\\s]+@)?)|git@)+([^\\/:\\s]+)(?:\\/|:)([^\\/:\\s]+)\\/([^\\s]+?)(?:\\.git)?(#[^\\s]+)?$/"
+        },
+        "rootDir": {
+          "type": "string",
+          "description": "Root directory (relative to checkoutUrl)",
+          "example": "src/app/component",
+          "maxLength": 100
+        }
+      },
+      "required": [
+        "checkoutUrl"
+      ]
+    },
+    "Create Secret": {
+      "type": "object",
+      "properties": {
+        "pipelineId": {
+          "type": "integer",
+          "description": "pipeline associated with the secret",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the secret",
+          "example": "NPM_TOKEN",
+          "maxLength": 64,
+          "pattern": "/^[A-Z_][A-Z0-9_]*$/"
+        },
+        "value": {
+          "type": "string",
+          "description": "value of the secret",
+          "example": "2d991790bab1ac8576097ca87f170df73410b55c"
+        },
+        "allowInPR": {
+          "type": "boolean",
+          "description": "flag to denote if the secret can be shown in PR builds"
+        }
+      },
+      "required": [
+        "pipelineId",
+        "name",
+        "value",
+        "allowInPR"
+      ]
+    },
+    "Certify input to template validator": {
+      "type": "object",
+      "properties": {
+        "yaml": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "yaml"
+      ]
+    },
+    "Create token": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Token name",
+          "example": "Mobile token",
+          "maxLength": 128
+        },
+        "description": {
+          "type": "string",
+          "description": "Token description",
+          "example": "Used to authenticate the mobile app",
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "Validation Input": {
+      "type": "object",
+      "properties": {
+        "yaml": {
+          "type": "string"
+        }
+      }
+    },
+    "Model 18": {
+      "type": "object",
+      "properties": {
+        "scmUrls": {
+          "$ref": "#/definitions/scmUrls",
+          "type": "array"
+        },
+        "startAll": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "scmUrls"
+      ]
+    },
+    "Model 19": {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "$ref": "#/definitions/nodes",
+          "type": "array"
+        },
+        "edges": {
+          "$ref": "#/definitions/edges",
+          "type": "array"
+        }
+      }
+    },
+    "Execution information": {
+      "type": "object",
+      "properties": {
+        "annotations": {
+          "$ref": "#/definitions/admins"
+        },
+        "errors": {
+          "$ref": "#/definitions/Model 7",
+          "type": "array"
+        },
+        "jobs": {
+          "$ref": "#/definitions/admins"
+        },
+        "childPipelines": {
+          "$ref": "#/definitions/Model 18"
+        },
+        "workflowGraph": {
+          "$ref": "#/definitions/Model 19"
+        }
+      }
+    },
+    "Model 20": {
+      "type": "object",
+      "properties": {
+        "context": {
+          "$ref": "#/definitions/admins"
+        },
+        "message": {
+          "type": "string"
+        },
+        "path": {
+          "$ref": "#/definitions/Model 7",
+          "type": "array"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "path",
+        "type"
+      ]
+    },
+    "Array of errors encountered while validating the given command": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Model 20"
+      }
+    },
+    "Command validation output": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "$ref": "#/definitions/Array of errors encountered while validating the given command",
+          "type": "array"
+        },
+        "command": {
+          "$ref": "#/definitions/admins"
+        }
+      },
+      "required": [
+        "errors",
+        "command"
+      ]
+    },
+    "Template validation output": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "$ref": "#/definitions/Array of errors encountered while validating the given command",
+          "type": "array"
+        },
+        "template": {
+          "$ref": "#/definitions/admins"
+        }
+      },
+      "required": [
+        "errors",
+        "template"
+      ]
+    },
+    "Update Banner": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "Body of banner to display",
+          "example": "Due to planned upgrade of Kubernetes, Screwdriver will be down",
+          "maxLength": 512
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Flag if the banner is active",
+          "example": true
+        },
+        "type": {
+          "type": "string",
+          "description": "Type/Severity of the banner message",
+          "example": "info",
+          "enum": [
+            "info",
+            "warn"
+          ],
+          "maxLength": 32
+        }
+      }
+    },
+    "Update BuildCluster": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Description of the build cluster",
+          "example": "Build cluster for iOS team",
+          "maxLength": 100
+        },
+        "scmOrganizations": {
+          "$ref": "#/definitions/scmOrganizations",
+          "type": "array"
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Flag if the the build cluster is active",
+          "example": true
+        },
+        "managedByScrewdriver": {
+          "type": "boolean",
+          "description": "Flag if the cluster is managed by screwdriver team",
+          "example": true
+        },
+        "maintainer": {
+          "type": "string",
+          "description": "Maintainer of the Command",
+          "example": "foo@bar.com",
+          "maxLength": 64,
+          "x-format": {
+            "email": true
+          }
+        },
+        "weightage": {
+          "type": "number",
+          "description": "Weight percentage for build cluster",
+          "example": 20,
+          "minimum": 1,
+          "maximum": 100
+        }
+      }
+    },
+    "Update Build": {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "$ref": "#/definitions/admins"
+        },
+        "status": {
+          "type": "string",
+          "description": "Current status of the build",
+          "example": "SUCCESS",
+          "enum": [
+            "ABORTED",
+            "CREATED",
+            "FAILURE",
+            "QUEUED",
+            "RUNNING",
+            "SUCCESS",
+            "BLOCKED",
+            "UNSTABLE",
+            "COLLAPSED",
+            "FROZEN"
+          ]
+        },
+        "statusMessage": {
+          "type": "string",
+          "description": "Status message to describe status of the build",
+          "example": "Build failed due to infrastructure error"
+        },
+        "stats": {
+          "$ref": "#/definitions/stats"
+        }
+      }
+    },
+    "Update collection": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Collection name",
+          "example": "Favorites",
+          "maxLength": 128
+        },
+        "description": {
+          "type": "string",
+          "description": "Collection description",
+          "example": "List of my favorite pipelines",
+          "maxLength": 256
+        },
+        "pipelineIds": {
+          "$ref": "#/definitions/pipelineIds",
+          "type": "array"
+        }
+      }
+    },
+    "Update Job": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "Current state of the Job",
+          "example": "ENABLED",
+          "default": "ENABLED",
+          "enum": [
+            "ENABLED",
+            "DISABLED"
+          ],
+          "maxLength": 10
+        },
+        "stateChanger": {
+          "type": "string",
+          "description": "Username for who changed the state",
+          "maxLength": 128
+        },
+        "stateChangeTime": {
+          "type": "string",
+          "description": "When the state of the job was changed",
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "stateChangeMessage": {
+          "type": "string",
+          "description": "Reason why disabling or enabling job",
+          "example": "Testing out new feature change in beta only",
+          "maxLength": 512
+        }
+      }
+    },
+    "Update Pipeline": {
+      "type": "object",
+      "properties": {
+        "checkoutUrl": {
+          "type": "string",
+          "description": "Checkout url for the application",
+          "example": "git@github.com:screwdriver-cd/data-schema.git#master",
+          "pattern": "/^(?:(?:https:\\/\\/(?:[^@\\/:\\s]+@)?)|git@)+([^\\/:\\s]+)(?:\\/|:)([^\\/:\\s]+)\\/([^\\s]+?)(?:\\.git)?(#[^\\s]+)?$/"
+        },
+        "rootDir": {
+          "type": "string",
+          "description": "Root directory (relative to checkoutUrl)",
+          "example": "src/app/component",
+          "maxLength": 100
+        }
+      }
+    },
+    "Update Secret": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "value of the secret",
+          "example": "2d991790bab1ac8576097ca87f170df73410b55c"
+        },
+        "allowInPR": {
+          "type": "boolean",
+          "description": "flag to denote if the secret can be shown in PR builds"
+        }
+      }
+    },
+    "Update token metadata": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Token name",
+          "example": "Mobile token",
+          "maxLength": 128
+        },
+        "description": {
+          "type": "string",
+          "description": "Token description",
+          "example": "Used to authenticate the mobile app",
+          "maxLength": 256
+        }
+      }
+    },
+    "Model 21": {
+      "type": "object",
+      "properties": {
+        "trusted": {
+          "type": "boolean",
+          "description": "Mark whether template is trusted"
+        }
+      }
+    },
+    "Update Step metadata": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "description": "Exit code",
+          "example": 1
+        },
+        "startTime": {
+          "type": "string",
+          "description": "When this Step started",
+          "example": "2017-01-06T01:49:50.384359267Z",
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "endTime": {
+          "type": "string",
+          "description": "When this Step stopped running",
+          "example": "2017-01-06T01:49:51.676057192Z",
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "lines": {
+          "type": "integer",
+          "description": "Number of Step log lines",
+          "example": 100
+        }
+      }
+    },
+    "Model 22": {
+      "type": "object",
+      "properties": {
+        "trusted": {
+          "type": "boolean",
+          "description": "Mark whether command is trusted"
+        }
+      }
+    },
+    "Model 23": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Exact version of the Template",
+          "example": "1.2.3",
+          "maxLength": 16,
+          "pattern": "/^(\\d+)\\.(\\d+)\\.(\\d+)$/"
+        }
+      }
+    },
+    "Model 24": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Exact version of the Command",
+          "example": "1.2.3",
+          "maxLength": 16,
+          "pattern": "/^(\\d+)\\.(\\d+)\\.(\\d+)$/",
+          "x-alternatives": [
+            {
+              "type": "string",
+              "description": "Exact version of the Command",
+              "example": "1.2.3",
+              "maxLength": 16,
+              "pattern": "/^(\\d+)\\.(\\d+)\\.(\\d+)$/"
+            },
+            {
+              "type": "string",
+              "description": "Name of the Command Tag",
+              "example": "latest",
+              "maxLength": 30,
+              "pattern": "/^[a-zA-Z][\\w-.]+$/"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "x-alt-definitions": {
+    "habitat": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "description": "Mode of the Habitat command",
+          "example": "remote",
+          "enum": [
+            "remote",
+            "local"
+          ]
+        },
+        "file": {
+          "type": "string",
+          "description": "File path of the Habitat artifact",
+          "example": "./foobar.hart",
+          "required": [
+            "file"
+          ],
+          "x-alternatives": [
+            {
+              "type": "string",
+              "description": "File path of the Habitat artifact",
+              "example": "./foobar.hart"
+            }
+          ]
+        },
+        "package": {
+          "type": "string",
+          "description": "Package of the Habitat command",
+          "example": "core/git/2.14.1"
+        },
+        "command": {
+          "type": "string",
+          "description": "Executable of the Habitat command",
+          "example": "git"
+        }
+      },
+      "required": [
+        "mode",
+        "package",
+        "command"
+      ]
+    },
+    "docker": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Image of the Docker command",
+          "example": "chefdk:1.2.3"
+        },
+        "command": {
+          "type": "string",
+          "description": "Executable of the Docker command",
+          "example": "knife",
+          "default": ""
+        }
+      },
+      "required": [
+        "image"
+      ]
+    },
+    "binary": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string",
+          "description": "File of the Binary command",
+          "example": "./foobar.sh"
+        }
+      },
+      "required": [
+        "file"
+      ]
+    },
+    "Get Command": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Identifier of this command",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace of the Command",
+          "example": "chefdk",
+          "maxLength": 64,
+          "pattern": "/^[\\w-]+$/"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the Command",
+          "example": "1.2",
+          "maxLength": 16,
+          "pattern": "/^(\\d+)(\\.\\d+)?(\\.\\d+)?$/"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the Command",
+          "example": "Installs npm modules",
+          "maxLength": 256
+        },
+        "maintainer": {
+          "type": "string",
+          "description": "Maintainer of the Command",
+          "example": "foo@bar.com",
+          "maxLength": 64,
+          "x-format": {
+            "email": true
+          }
+        },
+        "format": {
+          "type": "string",
+          "description": "Format of the Command",
+          "example": "habitat",
+          "enum": [
+            "habitat",
+            "docker",
+            "binary"
+          ],
+          "maxLength": 16
+        },
+        "habitat": {
+          "$ref": "#/x-alt-definitions/habitat"
+        },
+        "docker": {
+          "$ref": "#/x-alt-definitions/docker"
+        },
+        "binary": {
+          "$ref": "#/x-alt-definitions/binary"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the Command",
+          "example": "knife",
+          "maxLength": 64,
+          "pattern": "/^[\\w-]+$/"
+        },
+        "pipelineId": {
+          "type": "integer",
+          "description": "Identifier of this pipeline",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "createTime": {
+          "type": "string",
+          "description": "When this command was created",
+          "example": "2038-01-19T03:14:08.131Z",
+          "maxLength": 32,
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "usage": {
+          "type": "string",
+          "description": "Usage and arguments of the command",
+          "example": "sd_cmd exec foo/bar@1 -h <host> -d <domain>",
+          "maxLength": 4096
+        },
+        "trusted": {
+          "type": "boolean",
+          "description": "Mark whether command is trusted"
+        }
+      },
+      "required": [
+        "id",
+        "namespace",
+        "version",
+        "description",
+        "maintainer",
+        "format",
+        "name",
+        "pipelineId"
+      ]
+    },
+    "List of commands": {
+      "type": "array",
+      "items": {
+        "$ref": "#/x-alt-definitions/Get Command"
+      }
+    },
+    "Model 1": {
+      "type": "object",
+      "properties": {
+        "namespace": {
+          "type": "string",
+          "description": "Namespace of the Command",
+          "example": "chefdk",
+          "maxLength": 64,
+          "pattern": "/^[\\w-]+$/"
+        }
+      }
+    },
+    "Model 2": {
+      "type": "array",
+      "items": {
+        "$ref": "#/x-alt-definitions/Model 1"
+      }
+    },
+    "requires": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "/^~([\\w-]+)$/",
+        "x-alternatives": [
+          {
+            "type": "string",
+            "pattern": "/^~([\\w-]+)$/"
+          },
+          {
+            "type": "string",
+            "maxLength": 100,
+            "pattern": "/^[\\w-]+$/"
+          },
+          {
+            "type": "string",
+            "pattern": "/^~(sd@\\d+:[\\w-]+|(pr|commit|release|tag)(:(.+))?)$/"
+          }
+        ]
+      }
+    },
+    "blockedBy": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "/^~([\\w-]+)$/",
+        "x-alternatives": [
+          {
+            "type": "string",
+            "pattern": "/^~([\\w-]+)$/"
+          },
+          {
+            "type": "string",
+            "pattern": "/^~sd@(\\d+):([\\w-]+)$/"
+          }
+        ]
+      }
+    },
+    "freezeWindows": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sourcePaths": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 100
+      }
+    },
+    "Model 3": {
+      "type": "object"
+    },
+    "labels": {
+      "type": "array",
+      "description": "Labels for template",
+      "example": [
+        "stable",
+        "latest",
+        "beta"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "secrets": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "string",
+        "maxLength": 64,
+        "pattern": "/^[A-Z_][A-Z0-9_]*$/"
+      }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "x-alternatives": [
+          {
+            "type": "string"
+          },
+          {
+            "$ref": "#/x-alt-definitions/Model 3"
+          }
+        ]
+      }
+    },
+    "config": {
+      "type": "object",
+      "default": {},
+      "properties": {
+        "annotations": {
+          "$ref": "#/x-alt-definitions/Model 3"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "environment": {
+          "$ref": "#/x-alt-definitions/Model 3"
+        },
+        "image": {
+          "type": "string",
+          "pattern": "/^[^;&|><*?`$()!#'\" ]+$/"
+        },
+        "matrix": {
+          "$ref": "#/x-alt-definitions/Model 3"
+        },
+        "requires": {
+          "$ref": "#/definitions/Model 5",
+          "type": "array",
+          "x-alternatives": [
+            {
+              "$ref": "#/x-alt-definitions/requires",
+              "type": "array"
+            },
+            {
+              "type": "string",
+              "pattern": "/^~([\\w-]+)$/",
+              "x-alternatives": [
+                {
+                  "type": "string",
+                  "pattern": "/^~([\\w-]+)$/"
+                },
+                {
+                  "type": "string",
+                  "maxLength": 100,
+                  "pattern": "/^[\\w-]+$/"
+                },
+                {
+                  "type": "string",
+                  "pattern": "/^~(sd@\\d+:[\\w-]+|(pr|commit|release|tag)(:(.+))?)$/"
+                }
+              ]
+            }
+          ]
+        },
+        "blockedBy": {
+          "$ref": "#/definitions/Model 6",
+          "type": "array",
+          "x-alternatives": [
+            {
+              "$ref": "#/x-alt-definitions/blockedBy",
+              "type": "array"
+            },
+            {
+              "type": "string",
+              "pattern": "/^~([\\w-]+)$/",
+              "x-alternatives": [
+                {
+                  "type": "string",
+                  "pattern": "/^~([\\w-]+)$/"
+                },
+                {
+                  "type": "string",
+                  "pattern": "/^~sd@(\\d+):([\\w-]+)$/"
+                }
+              ]
+            }
+          ]
+        },
+        "freezeWindows": {
+          "$ref": "#/definitions/Model 7",
+          "type": "array",
+          "x-alternatives": [
+            {
+              "$ref": "#/x-alt-definitions/freezeWindows",
+              "type": "array"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "secrets": {
+          "$ref": "#/x-alt-definitions/secrets",
+          "type": "array"
+        },
+        "settings": {
+          "$ref": "#/x-alt-definitions/Model 3"
+        },
+        "sourcePaths": {
+          "$ref": "#/definitions/Model 8",
+          "type": "array",
+          "optional": [
+            "sourcePaths"
+          ],
+          "x-alternatives": [
+            {
+              "$ref": "#/x-alt-definitions/sourcePaths",
+              "type": "array"
+            },
+            {
+              "type": "string",
+              "maxLength": 100
+            }
+          ]
+        },
+        "steps": {
+          "$ref": "#/x-alt-definitions/steps",
+          "type": "array"
+        },
+        "template": {
+          "type": "string",
+          "pattern": "/^([\\w\\/-]+)(?:@((?:(?:\\d+)(?:\\.\\d+)?(?:\\.\\d+)?)|(?:[a-zA-Z][\\w-]+)))?$/"
+        }
+      }
+    },
+    "Get Template": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Identifier of this template",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "labels": {
+          "$ref": "#/x-alt-definitions/labels",
+          "type": "array"
+        },
+        "config": {
+          "$ref": "#/x-alt-definitions/config"
+        },
+        "name": {
+          "type": "string",
+          "description": "Template name",
+          "example": "nodejs/lib",
+          "maxLength": 64
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the Template",
+          "example": "1.2",
+          "maxLength": 16,
+          "pattern": "/^(\\d+)(\\.\\d+)?(\\.\\d+)?$/"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the Template",
+          "example": "Installs npm modules",
+          "maxLength": 256
+        },
+        "maintainer": {
+          "type": "string",
+          "description": "Maintainer of the Template",
+          "example": "foo@bar.com",
+          "maxLength": 64,
+          "x-format": {
+            "email": true
+          }
+        },
+        "pipelineId": {
+          "type": "integer",
+          "description": "Identifier of this pipeline",
+          "example": 123345,
+          "x-constraint": {
+            "positive": true
+          }
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace of the Template",
+          "example": "node",
+          "maxLength": 64,
+          "pattern": "/^[\\w-]+$/"
+        },
+        "images": {
+          "$ref": "#/x-alt-definitions/Model 3"
+        },
+        "createTime": {
+          "type": "string",
+          "description": "When this template was created",
+          "example": "2038-01-19T03:14:08.131Z",
+          "maxLength": 32,
+          "x-format": {
+            "isoDate": true
+          }
+        },
+        "trusted": {
+          "type": "boolean",
+          "description": "Mark whether template is trusted"
+        }
+      },
+      "required": [
+        "id",
+        "labels",
+        "name",
+        "version",
+        "description",
+        "maintainer",
+        "pipelineId"
+      ]
+    },
+    "List of templates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/x-alt-definitions/Get Template"
+      }
+    },
+    "Model 4": {
+      "type": "object",
+      "properties": {
+        "namespace": {
+          "type": "string",
+          "description": "Namespace of the Template",
+          "example": "node",
+          "maxLength": 64,
+          "pattern": "/^[\\w-]+$/"
+        }
+      }
+    },
+    "Model 5": {
+      "type": "array",
+      "items": {
+        "$ref": "#/x-alt-definitions/Model 4"
+      }
+    },
+    "environment": {
+      "type": "array",
+      "items": {
+        "$ref": "#/x-alt-definitions/Model 3"
+      }
+    },
+    "parentBuildId": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "x-constraint": {
+          "positive": true
+        }
+      }
+    }
+  }
+}
