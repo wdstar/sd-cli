@@ -6,5 +6,5 @@ Screwdriver CLI
 1. Download Screwdriver API Swagger specification file.
     ```bash
     $ mkdir swagger
-    $ curl -L https://api.screwdriver.cd/v4/swagger.json | jq . > swagger/sd-cd.json
+    $ curl -L https://api.screwdriver.cd/v4/swagger.json | jq . > swagger/sd-cd_oas2.json
     ```
